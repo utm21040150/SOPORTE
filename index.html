@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Soporte Tecnicó</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Soporte Técnico</h1>
+        <span class="subtitle">Sistema de Gestión de Mantenimiento</span>
+    </header>
+
+    <section class="cards">
+        <div class="card">
+            <h3>Total de Servicios</h3>
+            <p id="total">0</p>
+        </div>
+        <div class="card">
+            <h3>Servicios Abiertos</h3>
+            <p id="abiertos">0</p>
+        </div>
+        <div class="card">
+            <h3>En Proceso</h3>
+            <p id="proceso">0</p>
+        </div>
+        <div class="card">
+            <h3>Servicios Cerrados</h3>
+            <p id="cerrados">0</p>
+        </div>
+    </section>
+
+    <section class="table-container">
+        <h2>Servicios de Mantenimiento</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Problema</th>
+                    <th>Ubicación</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody id="tablaServicios"></tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
