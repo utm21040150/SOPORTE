@@ -15,9 +15,15 @@ const client = new Client({
     },
     puppeteer: {
         headless: headlessEnv,
-        // If you need to specify a Chrome/Chromium path, set PUPPETEER_EXECUTABLE_PATH
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-        args: (process.platform === 'win32') ? [] : ['--no-sandbox', '--disable-setuid-sandbox']
+        // Usar la variable de entorno o la ruta directa de Chromium
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
+        args: (process.platform === 'win32') ? [] : [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--disable-gpu'
+        ]
     }
 });
 
@@ -180,31 +186,31 @@ A continuación te haremos una breve encuesta para generar tu ticket.
                         `2️ Atasco de papel\n` +
                         `3️ Revisión de cables de conexión\n` +
                         `4️ Reinicio de contador\n` +
-                        `0️ Regresar al menú principal\n\n` ,
-                        
+                        `0️ Regresar al menú principal\n\n`,
+
 
                     "2": `*SISTEMA SIC*\n` +
                         `Selecciona una opción *escribiendo solo el número*:\n\n` +
                         `1️ Alta de usuario\n` +
                         `2️ Creación de carpetas\n` +
                         `3️ Error o fuera de servicio\n` +
-                        `0️ Regresar al menú principal\n\n` ,
-                        
+                        `0️ Regresar al menú principal\n\n`,
+
 
                     "3": `*SERVICIO DE INTERNET*\n` +
                         `Selecciona una opción *escribiendo solo el número*:\n\n` +
                         `1️ Permisos de navegación\n` +
                         `2️ Revisión de conexión\n` +
-                        `0️ Regresar al menú principal\n\n` ,
-                        
+                        `0️ Regresar al menú principal\n\n`,
+
 
                     "4": `*TELEFONÍA*\n` +
                         `Selecciona una opción *escribiendo solo el número*:\n\n` +
                         `1️ Actualizar nombre del display\n` +
                         `2️ Fuera de servicio\n` +
                         `3️ Revisión de conexión\n` +
-                        `0️ Regresar al menú principal\n\n` ,
-                        
+                        `0️ Regresar al menú principal\n\n`,
+
 
                     "5": `*CORREO INSTITUCIONAL*\n` +
                         `Selecciona una opción *escribiendo solo el número*:\n\n` +
@@ -212,8 +218,8 @@ A continuación te haremos una breve encuesta para generar tu ticket.
                         `2️ Actualización de puesto\n` +
                         `3️ Reinicio de contraseña\n` +
                         `4️ Buzón lleno o sin servicio\n` +
-                        `0️ Regresar al menú principal\n\n` ,
-                        
+                        `0️ Regresar al menú principal\n\n`,
+
 
                     "6": `*SOPORTE TÉCNICO*\n` +
                         `Selecciona una opción *escribiendo solo el número*:\n\n` +
@@ -221,7 +227,7 @@ A continuación te haremos una breve encuesta para generar tu ticket.
                         `2️ Reubicación de equipo de cómputo\n` +
                         `3️ Instalación de software o hardware\n` +
                         `4️ Programar capacitaciones\n` +
-                        `0️ Regresar al menú principal\n\n` 
+                        `0️ Regresar al menú principal\n\n`
                 };
 
                 msg.reply(menus[numero.toString()]);
@@ -252,17 +258,17 @@ A continuación te haremos una breve encuesta para generar tu ticket.
 
                 // CORRECCIÓN: Declarar subopcion PRIMERO
                 const subopcion = parseInt(inputSubmenu);
-                
+
                 // CORRECCIÓN: Definir maxOpcion según el tipo
                 let maxOpcion = 4; // Valor por defecto
-                
+
                 // Definir máximo según el tipo
                 if (s.data.tipo_numero === 2) maxOpcion = 3; // SIC
                 if (s.data.tipo_numero === 3) maxOpcion = 2; // Internet
                 if (s.data.tipo_numero === 4) maxOpcion = 3; // Telefonía
                 if (s.data.tipo_numero === 5) maxOpcion = 4; // Correo
                 if (s.data.tipo_numero === 6) maxOpcion = 4; // Soporte Técnico
-                
+
                 // CORRECCIÓN: Ahora sí podemos usar subopcion
                 if (isNaN(subopcion) || subopcion < 1 || subopcion > maxOpcion) {
                     msg.reply(`❌ *Opción no válida.* Por favor, envía solo un número del 1 al ${maxOpcion} (o 0 para regresar):`);
@@ -320,7 +326,7 @@ A continuación te haremos una breve encuesta para generar tu ticket.
 
                 msg.reply(
                     `✅ *${s.data.problema_descripcion}*\n\n` +
-                    `*¿Cuál es tu área de trabajo? (Dirección y departamento)*\n\n` 
+                    `*¿Cuál es tu área de trabajo? (Dirección y departamento)*\n\n`
                 );
                 s.step = 4;
                 break;
@@ -379,26 +385,6 @@ A continuación te haremos una breve encuesta para generar tu ticket.
     }
 });
 
-// Initialize with retry logic and better error handling
-async function initializeBot(retries = 3) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            console.log(`Iniciando bot (intento ${i + 1}/${retries})...`);
-            await client.initialize();
-            console.log('Bot inicializado exitosamente.');
-            return;
-        } catch (err) {
-            console.error(`Error al inicializar (intento ${i + 1}):`, err.message);
-            if (i < retries - 1) {
-                await new Promise(r => setTimeout(r, 3000));
-            } else {
-                console.error('No se pudo inicializar el bot después de varios intentos.');
-                reportError(err, { step: 'initialize_failed', retries });
-                process.exit(1);
-            }
-        }
-    }
-}
 // ... (todo tu código anterior) ...
 
 // ============================================
