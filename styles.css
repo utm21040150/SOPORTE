@@ -1,0 +1,115 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6fb;
+    margin: 0;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    color: #666;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background:  #d3e5ff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin: 0;
+    color: #555;
+}
+
+.card p {
+    font-size: 28px;
+    margin: 10px 0 0;
+    font-weight: bold;
+}
+
+.table-container {
+    background: #d3e5ff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f1f3f8;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+}
+
+.estado {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: white;
+}
+/* Alinear estado (badge) y select en la misma fila */
+.estado-cell{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Estilos comunes para selects para evitar solapamiento */
+.estado-select, .prioridad-select{
+    min-width: 130px;
+    height: 34px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid #cfcfcf;
+    background: white;
+    box-sizing: border-box;
+}
+
+/* Selects de estado con color de fondo según el valor seleccionado */
+.estado-select.abierto{ background: #ff9800; color: white; border-color: #ff9800; }
+.estado-select.proceso{ background: #2196f3; color: white; border-color: #2196f3; }
+.estado-select.cerrado{ background: #4caf50; color: white; border-color: #4caf50; }
+
+/* Selects de prioridad con colores suaves */
+.prioridad-select.prioridad-alta{ background: #ffecec; color: #e53935; border-color: #f5c6c6; }
+.prioridad-select.prioridad-media{ background: #fff9e6; color: #fbc02d; border-color: #fbebbf; }
+.prioridad-select.prioridad-baja{ background: #e9f8ee; color: #43a047; border-color: #cfead6; }
+
+/* Evitar que los controles se encimen en pantallas pequeñas */
+td { vertical-align: middle; }
+@media (max-width: 640px){
+    .estado-select, .prioridad-select{ min-width: 100px; height: 30px; }
+}
+select, input[type="date"] {
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+.abierto { background: #ff9800; }
+.proceso { background: #2196f3; }
+.cerrado { background: #4caf50; }
+
+.prioridad-alta { color: #e53935; font-weight: bold; }
+.prioridad-media { color: #fbc02d; font-weight: bold; }
+.prioridad-baja { color: #43a047; font-weight: bold; }
+
