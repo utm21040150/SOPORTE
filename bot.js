@@ -399,5 +399,53 @@ async function initializeBot(retries = 3) {
         }
     }
 }
+// ... (todo tu código anterior) ...
+
+// ============================================
+// ✅ SERVIDOR WEB PARA RENDER
+// ============================================
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Servir archivos estáticos
+app.use(express.static(__dirname));
+
+// Ruta principal - sirve tu index.html
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+// Health check para UptimeRobot
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
+// Iniciar servidor
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🌐 Servidor web corriendo en puerto ${PORT}`);
+    console.log(`📱 Accede a: http://localhost:${PORT} (local) o en tu URL de Render`);
+});
+
+// Initialize with retry logic and better error handling
+async function initializeBot(retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            console.log(`Iniciando bot (intento ${i + 1}/${retries})...`);
+            await client.initialize();
+            console.log('Bot inicializado exitosamente.');
+            return;
+        } catch (err) {
+            console.error(`Error al inicializar (intento ${i + 1}):`, err.message);
+            if (i < retries - 1) {
+                await new Promise(r => setTimeout(r, 3000));
+            } else {
+                console.error('No se pudo inicializar el bot después de varios intentos.');
+                reportError(err, { step: 'initialize_failed', retries });
+                process.exit(1);
+            }
+        }
+    }
+}
 
 initializeBot();
