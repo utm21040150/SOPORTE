@@ -1,29 +1,26 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const puppeteer = require('puppeteer');
 const axios = require('axios');
 const qrcode = require('qrcode-terminal');
 const path = require('path');
 const os = require('os');
 
-// Use a temp folder OUTSIDE OneDrive to avoid sync conflicts
+// Carpeta temporal para sesión (Render compatible)
 const dataPath = process.env.WHATSAPP_DATA_PATH || path.join(os.tmpdir(), 'whatsapp-bot-session');
 
-const headlessEnv = (process.env.HEADLESS || 'true') === 'true';
 const client = new Client({
-    authStrategy: new LocalAuth({ clientId: 'soporte-bot', dataPath }),
-    webVersionCache: {
-        type: 'none'
-    },
-puppeteer: {
-    headless: true, // o headlessEnv si lo necesitas
-    args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--disable-gpu'
-    ]
-}
-
+    authStrategy: new LocalAuth({
+        dataPath: dataPath
+    }),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu'
+        ]
+    }
 });
 
 const SHEET_API = process.env.SHEET_API || "https://script.google.com/macros/s/AKfycby_P0LSgCl7VRfHtdvP8_JhA-bxN8tiGpeuj6G25gIBEPSaoqzpNXj2mFqUp5aqs3vUzA/exec";
