@@ -14,6 +14,7 @@ const client = new Client({
     }),
     puppeteer: {
         headless: true,
+        executablePath: puppeteer.executablePath(), // 👈 ESTA ES LA CLAVE
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
