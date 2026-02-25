@@ -13,18 +13,16 @@ const client = new Client({
     webVersionCache: {
         type: 'none'
     },
-    puppeteer: {
-        headless: headlessEnv,
-        // Usar la variable de entorno o la ruta directa de Chromium
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
-        args: (process.platform === 'win32') ? [] : [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
-            '--disable-gpu'
-        ]
-    }
+puppeteer: {
+    headless: true, // o headlessEnv si lo necesitas
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--disable-gpu'
+    ]
+}
 });
 
 const SHEET_API = process.env.SHEET_API || "https://script.google.com/macros/s/AKfycby_P0LSgCl7VRfHtdvP8_JhA-bxN8tiGpeuj6G25gIBEPSaoqzpNXj2mFqUp5aqs3vUzA/exec";
