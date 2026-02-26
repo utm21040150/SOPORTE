@@ -12,16 +12,16 @@ const client = new Client({
     authStrategy: new LocalAuth({
         dataPath: dataPath
     }),
+
     puppeteer: {
-        headless: true,
-        executablePath: puppeteer.executablePath(), // 👈 ESTA ES LA CLAVE
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu'
-        ]
-    }
+    headless: true,
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu'
+    ]
+}
 });
 
 const SHEET_API = process.env.SHEET_API || "https://script.google.com/macros/s/AKfycby_P0LSgCl7VRfHtdvP8_JhA-bxN8tiGpeuj6G25gIBEPSaoqzpNXj2mFqUp5aqs3vUzA/exec";
