@@ -15,5 +15,8 @@
   },
   "scripts": {
     "start": "node bot.js"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
